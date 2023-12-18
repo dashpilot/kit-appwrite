@@ -3,11 +3,8 @@
   import Editor from "$lib/editor/Editor.svelte";
 
   export let data;
-  let user = false;
-  let curIndex = false;
-
   let posts = data.posts;
-  let post = {};
+  let user = false;
 </script>
 
 <nav class="bg-black py-2 px-3 d-flex justify-content-between">

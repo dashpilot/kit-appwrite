@@ -1,12 +1,15 @@
 <script>
-  import User from "$lib/User.svelte";
   import { databases, ID } from "$lib/appwrite";
-  import { Query } from "appwrite";
   import { onMount } from "svelte";
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
 
   export let data;
   let curIndex = false;
+
+  export let user;
+  export let posts;
+  let loading = false;
+  let post = {};
 
   onMount(async () => {
     // getPosts();
@@ -19,10 +22,6 @@
       });
     });
   });
-  export let user;
-  export let posts;
-  let loading = false;
-  let post = {};
 
   /*
     async function getPosts() {
