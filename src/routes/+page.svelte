@@ -36,9 +36,4 @@
   [data-edit] {
     border: 1px solid transparent;
   }
-
-  [data-edit]:hover {
-    border: 1px dashed #999;
-    cursor: pointer;
-  }
 </style>
