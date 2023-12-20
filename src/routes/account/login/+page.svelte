@@ -29,8 +29,8 @@
         });
         */
 
-        loading = false;
         window.location = "/";
+        loading = false;
       },
       function (myerror) {
         console.log(myerror); // Failure

@@ -16,6 +16,7 @@
       function (response) {
         console.log(response); // Success
         window.location = "/account/login";
+        loading = false;
       },
       function (myerror) {
         console.log(myerror); // Failure
