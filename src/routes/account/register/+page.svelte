@@ -1,36 +1,21 @@
 <script>
-  import { account } from "$lib/appwrite";
+  import { account, ID } from "$lib/appwrite";
 
   let loading = false;
   let error = false;
+  let username;
   let email;
   let password;
 
-  async function login() {
+  async function register() {
     loading = true;
 
-    const promise = account.createEmailSession(email, password);
+    const promise = account.create(ID.unique(), email, password, username);
 
     promise.then(
-      async function (response) {
+      function (response) {
         console.log(response); // Success
-
-        /*
-        const user = await account.createJWT();
-        console.log(user);
-
-        // Assuming user.jwt contains the JWT
-        const res = await fetch("/account/login", {
-          method: "POST",
-          headers: {
-            "x-appwrite-user-jwt": user.jwt,
-          },
-          body: JSON.stringify({ email: response.email, userId: response.$id }),
-        });
-        */
-
-        loading = false;
-        window.location = "/";
+        window.location = "/account/login";
       },
       function (myerror) {
         console.log(myerror); // Failure
@@ -44,13 +29,24 @@
 <div class="backdrop">
   <div class="card shadow-sm mt-5" style="width: 360px; margin: 0 auto;">
     <div class="card-body">
-      <h2 class="text-center">Log in</h2>
+      <h2 class="text-center">Register</h2>
 
       {#if error}
         <div class="alert alert-warning mt-4 text-center" role="alert">
           {error}
         </div>
       {/if}
+
+      <div class="form-group">
+        <label class="mb-1" for="username">Username</label>
+        <input
+          type="username"
+          class="form-control mb-2"
+          id="username"
+          name="username"
+          bind:value={username}
+        />
+      </div>
 
       <div class="form-group">
         <label class="mb-1" for="username">Email</label>
@@ -62,6 +58,7 @@
           bind:value={email}
         />
       </div>
+
       <div class="form-group">
         <label class="mb-1" for="password">Password</label>
         <input
@@ -73,7 +70,7 @@
         />
       </div>
 
-      <button on:click={login} type="submit" class="btn btn-dark w-100 mt-2">
+      <button on:click={register} type="submit" class="btn btn-dark w-100 mt-2">
         {#if loading}
           <div
             id="spinner"
@@ -83,12 +80,11 @@
             <span class="visually-hidden">Loading...</span>
           </div>
         {:else}
-          Submit
+          Register
         {/if}
       </button>
-
       <div class="text-center pt-3 pb-1">
-        No account yet? <a href="/account/register">Create an account</a>
+        Already have an account? <a href="/account/login">Log in</a>
       </div>
     </div>
   </div>
