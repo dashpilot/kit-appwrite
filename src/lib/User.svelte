@@ -11,8 +11,11 @@
 
   async function checkLoggedIn() {
     try {
-      user = await account.get();
+      console.log("checking user");
+
+      user = await account.getSession("current");
       console.log(user);
+
       logged_in = true;
     } catch (e) {
       console.log(e);

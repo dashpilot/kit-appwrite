@@ -5,14 +5,29 @@
   let email;
   let password;
 
-  function login() {
+  async function login() {
     loading = true;
 
     const promise = account.createEmailSession(email, password);
 
     promise.then(
-      function (response) {
+      async function (response) {
         console.log(response); // Success
+
+        /*
+        const user = await account.createJWT();
+        console.log(user);
+
+        // Assuming user.jwt contains the JWT
+        const res = await fetch("/account/login", {
+          method: "POST",
+          headers: {
+            "x-appwrite-user-jwt": user.jwt,
+          },
+          body: JSON.stringify({ email: response.email, userId: response.$id }),
+        });
+        */
+
         loading = false;
         window.location = "/";
       },
