@@ -8,7 +8,7 @@
 </script>
 
 <nav class="bg-black py-2 px-3 d-flex justify-content-between">
-  <h4 class="text-white m-0 pt-1">Sveltekit</h4>
+  <h4 class="text-white m-0 pt-1">Dashboard</h4>
   <User bind:user />
 </nav>
 

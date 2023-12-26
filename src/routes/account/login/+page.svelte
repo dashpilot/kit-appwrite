@@ -15,7 +15,6 @@
       async function (response) {
         console.log(response); // Success
 
-        /*
         const user = await account.createJWT();
         console.log(user);
 
@@ -25,11 +24,13 @@
           headers: {
             "x-appwrite-user-jwt": user.jwt,
           },
-          body: JSON.stringify({ email: response.email, userId: response.$id }),
+          body: JSON.stringify({
+            email: response.providerUid,
+            userId: response.$id,
+          }),
         });
-        */
 
-        window.location = "/";
+        // window.location = "/";
         loading = false;
       },
       function (myerror) {
