@@ -1,6 +1,5 @@
 <script>
   import User from "$lib/User.svelte";
-  import Editor from "$lib/editor/Editor.svelte";
 
   export let data;
   let posts = data.posts;
@@ -8,16 +7,17 @@
 
   import { onMount } from "svelte";
 
-  let Thing;
+  let Editor;
 
-  onMount(async () => {
-    Thing = (await import("../lib/Thing.svelte")).default;
-  });
+  $: user && checkUser();
+
+  async function checkUser() {
+    console.log("checking user");
+    if (user) {
+      Editor = (await import("$lib/editor/Editor.svelte")).default;
+    }
+  }
 </script>
-
-<svelte:component this={Thing}>
-  <p>some slotted content</p>
-</svelte:component>
 
 <nav class="bg-black py-2 px-3 d-flex justify-content-between">
   <h4 class="text-white m-0 pt-1">Dashboard</h4>
@@ -37,9 +37,7 @@
   {/if}
 </div>
 
-{#if user}
-  <Editor bind:user bind:posts />
-{/if}
+<svelte:component this={Editor} bind:user bind:posts></svelte:component>
 
 <style>
   [data-edit] {
