@@ -15,6 +15,7 @@
       async function (response) {
         console.log(response); // Success
 
+        /*
         const user = await account.createJWT();
         console.log(user);
 
@@ -29,8 +30,9 @@
             userId: response.$id,
           }),
         });
+        */
 
-        // window.location = "/";
+        window.location = "/";
         loading = false;
       },
       function (myerror) {
