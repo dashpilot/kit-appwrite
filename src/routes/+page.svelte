@@ -5,7 +5,19 @@
   export let data;
   let posts = data.posts;
   let user = false;
+
+  import { onMount } from "svelte";
+
+  let Thing;
+
+  onMount(async () => {
+    Thing = (await import("../lib/Thing.svelte")).default;
+  });
 </script>
+
+<svelte:component this={Thing}>
+  <p>some slotted content</p>
+</svelte:component>
 
 <nav class="bg-black py-2 px-3 d-flex justify-content-between">
   <h4 class="text-white m-0 pt-1">Dashboard</h4>
