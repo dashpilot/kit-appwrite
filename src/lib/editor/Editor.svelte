@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
+  import TextEditor from "$lib/editor/widgets/TextEditor.svelte";
   import Gallery from "$lib/editor/widgets/Gallery.svelte";
 
   let curIndex = false;
@@ -123,8 +124,12 @@
         bind:value={posts[curIndex].title}
       />
 
+      <!--
       <textarea class="form-control mt-3" bind:value={posts[curIndex].body}
       ></textarea>
+      -->
+
+      <TextEditor bind:html={posts[curIndex].body} />
 
       <Gallery bind:curItem={posts[curIndex]} key="images" />
 

@@ -36,7 +36,7 @@
       {#each posts as item}
         <div id={item.$id} data-edit data-fields="title=text&body=html">
           <h3>{item.title}</h3>
-          <p>{item.body}</p>
+          <p>{@html item.body}</p>
 
           {#if item.json}
             {#each json(item.json) as [key, val]}

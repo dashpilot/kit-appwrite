@@ -1,19 +1,19 @@
 <script>
-  import { onMount, onDestroy } from 'svelte'
-  import { Editor } from '@tiptap/core'
-  import StarterKit from '@tiptap/starter-kit'
-  import Image from '@tiptap/extension-image'
-  import Link from '@tiptap/extension-link'
-  
+  import { onMount, onDestroy } from "svelte";
+  import { Editor } from "@tiptap/core";
+  import StarterKit from "@tiptap/starter-kit";
+  import Image from "@tiptap/extension-image";
+  import Link from "@tiptap/extension-link";
+
   // export let key;
   export let html;
-  
-  if(typeof html === 'undefined'){
-    html = '';
+
+  if (typeof html === "undefined") {
+    html = "";
   }
 
-  let element
-  let editor
+  let element;
+  let editor;
 
   onMount(() => {
     editor = new Editor({
@@ -30,96 +30,110 @@
       content: html,
       onTransaction: () => {
         // force re-render so `editor.isActive` works as expected
-        editor = editor
-        
+        editor = editor;
       },
       onUpdate({ editor }) {
-        html = editor.getHTML()
+        html = editor.getHTML();
         // console.log(html)
       },
-    })
-  })
+    });
+  });
 
   onDestroy(() => {
     if (editor) {
-      editor.destroy()
+      editor.destroy();
     }
-  })
-  
-  
+  });
+
   function setLink() {
-    const previousUrl = editor.getAttributes('link').href
-    const url = window.prompt('URL', previousUrl)
-  
+    const previousUrl = editor.getAttributes("link").href;
+    const url = window.prompt("URL", previousUrl);
+
     // cancelled
     if (url === null) {
-      return
+      return;
     }
-  
+
     // empty
-    if (url === '') {
-      editor
-        .chain()
-        .focus()
-        .extendMarkRange('link')
-        .unsetLink()
-        .run()
-  
-      return
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+      return;
     }
-  
+
     // update link
     editor
       .chain()
       .focus()
-      .extendMarkRange('link')
+      .extendMarkRange("link")
       .setLink({
-        href: url
+        href: url,
       })
-      .run()
+      .run();
   }
-  
+
   function addImage() {
-    const url = window.prompt('URL')
-  
+    const url = window.prompt("URL");
+
     if (url) {
-      this.editor.chain().focus().setImage({
-        src: url
-      }).run()
+      this.editor
+        .chain()
+        .focus()
+        .setImage({
+          src: url,
+        })
+        .run();
     }
   }
 </script>
 
 {#if editor}
- <div class="wdgt-btn-group">
- 
+  <div class="btn-group mt-3 mb-0">
+    <button
+      class="btn btn-outline-secondary"
+      on:click={editor.chain().focus().toggleBold().run()}
+      class:is-active={editor.isActive("bold")}
+      ><i class="fas fa-bold"></i></button
+    >
 
-       <button class="my-btn wdgt-btn-outline-secondary" on:click="{editor.chain().focus().toggleBold().run()}" class:is-active="{editor.isActive('bold')}"><i class="fas fa-bold"></i></button>
+    <button
+      class="btn btn-outline-secondary"
+      on:click={editor.chain().focus().toggleItalic().run()}
+      class:is-active={editor.isActive("italic")}
+      ><i class="fas fa-italic"></i></button
+    >
+
+    <button
+      class="btn btn-outline-secondary"
+      on:click={setLink}
+      class:is-active={editor.isActive("link")}
+      ><i class="fas fa-link"></i></button
+    >
+
+    <button
+      class="btn btn-outline-secondary"
+      on:click={editor.chain().focus().toggleBulletList().run()}
+      class:is-active={editor.isActive("bulletList")}
+      ><i class="fas fa-list-ul"></i></button
+    >
+
+    <!--
        
-       <button class="my-btn wdgt-btn-outline-secondary" on:click="{editor.chain().focus().toggleItalic().run()}" class:is-active="{editor.isActive('italic')}"><i class="fas fa-italic"></i></button>
-       
-       <button class="my-btn wdgt-btn-outline-secondary" on:click="{setLink}" class:is-active="{editor.isActive('link')}"><i class="fas fa-link"></i></button>
-       
-       <button class="my-btn wdgt-btn-outline-secondary" on:click="{editor.chain().focus().toggleBulletList().run()}" class:is-active="{editor.isActive('bulletList')}"><i class="fas fa-list-ul"></i></button>
-       
-       
-       <!--
-       
-        <button class="my-btn wdgt-btn-outline-secondary" on:click="{editor.chain().focus().toggleHeading({ level: 1 }).run()}" class:is-active="{editor.isActive('heading', { level: 1 }) }"><strong>H1</strong></button>
+        <button class="my-btn btn btn-outline-secondary" on:click="{editor.chain().focus().toggleHeading({ level: 1 }).run()}" class:is-active="{editor.isActive('heading', { level: 1 }) }"><strong>H1</strong></button>
         
-        <button class="my-btn wdgt-btn-outline-secondary" on:click="{editor.chain().focus().toggleHeading({ level: 2 }).run()}" class:is-active="{editor.isActive('heading', { level: 2 }) }"><strong>H2</strong></button>
+        <button class="my-btn btn btn-outline-secondary" on:click="{editor.chain().focus().toggleHeading({ level: 2 }).run()}" class:is-active="{editor.isActive('heading', { level: 2 }) }"><strong>H2</strong></button>
         
         
-        <button class="my-btn wdgt-btn-outline-secondary" on:click="{editor.chain().focus().toggleHeading({ level: 3 }).run()}" class:is-active="{editor.isActive('heading', { level: 3 }) }"><strong>H3</strong></button>
+        <button class="my-btn btn btn-outline-secondary" on:click="{editor.chain().focus().toggleHeading({ level: 3 }).run()}" class:is-active="{editor.isActive('heading', { level: 3 }) }"><strong>H3</strong></button>
 
  -->
- <!--
+    <!--
 
 
  
  
  <template v-if="settings.rte_buttons.includes('image')">
- <button @click="addImage" class="wdgt-btn-outline-secondary" :class="{ 'is-active': editor.isActive('image') }">
+ <button @click="addImage" class="btn btn-outline-secondary" :class="{ 'is-active': editor.isActive('image') }">
    <i class=" fas fa-image"></i>
  </button>
  </template>
@@ -127,16 +141,13 @@
 
  -->
 
- <!--
-     <button class="wdgt-btn-outline-secondary w-25" disabled></button>
+    <!--
+     <button class="btn btn-outline-secondary w-25" disabled></button>
      -->
-  
-   </div>
-   
-   
+  </div>
 {/if}
 
-<div class="wdgt-from-control" spellcheck="false" bind:this={element} />
+<div class="wdgt-form-control" spellcheck="false" bind:this={element} />
 
 <style>
   button.active {
@@ -145,38 +156,51 @@
   }
 
   .is-active {
-    background-color: #EEE;
+    background-color: #eee;
   }
-  
+
   blockquote {
-    border-left: 5px solid #8391F1;
+    border-left: 5px solid #8391f1;
     padding-left: 10px;
   }
-  
+
   img {
     max-width: 100%;
   }
-  
-button{
-  border: 1px solid #ddd;
-  margin-bottom: 0 !important;
-}
 
-button:hover{
-  background-color: #EEE;
-  color: black;
-}
-  
-  .wdgt-btn-group .btn:first-child{
+  button {
+    border: 1px solid #ddd;
+    margin-bottom: 0 !important;
+  }
+
+  button:hover {
+    background-color: #eee;
+    color: black;
+  }
+
+  .btn btn-group .btn:first-child {
     border-bottom-left-radius: 0;
   }
-  .wdgt-btn-group .btn:last-child{
+  .btn btn-group .btn:last-child {
     border-bottom-right-radius: 0;
   }
-  .wdgt-btn-outline-secondary{
-    padding-top: 4px !important;
-  }
- 
-  
-</style>
 
+  :global(.ProseMirror) {
+    display: block;
+    border: 1px solid #ddd;
+    padding: 15px;
+    outline: none;
+    border-radius: 6px;
+    margin-bottom: 0px;
+    margin-top: 10px;
+    background-color: #ffffff;
+    height: 200px;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+
+  :global(.ProseMirror a) {
+    color: black;
+    text-decoration: underline;
+  }
+</style>

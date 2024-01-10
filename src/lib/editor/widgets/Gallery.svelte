@@ -1,6 +1,5 @@
 <script>
   import { storage, databases } from "$lib/appwrite/client.js";
-  import { fade } from "svelte/transition";
   import { onMount } from "svelte";
 
   // export let data;
@@ -146,8 +145,10 @@
                 }
               );
               */
+              saving = false;
             },
             function (error) {
+              saving = false;
               console.log(error); // Failure
             }
           );
@@ -168,6 +169,17 @@
 
       curItem = curItem;
 
+      const promise = storage.deleteFile("657257b8e3cc69765267", filename);
+
+      promise.then(
+        function (response) {
+          console.log(response); // Success
+        },
+        function (error) {
+          console.log(error); // Failure
+        }
+      );
+      /*
       if (cfg.ssr) {
         var resp = await fetch("/api/delete", {
           method: "POST",
@@ -179,6 +191,7 @@
         });
         var result = await resp.json();
       }
+      */
     }
   }
 
@@ -254,10 +267,10 @@
 
 <ul class="list-group mt-2">
   {#each curItem[key] as img}
-    <li class="list-group-item d-flex justify-content-between" transition:fade>
+    <li class="list-group-item d-flex justify-content-between">
       <div
         class="wdgt-box-img"
-        style="background-image: url({cfg.img_url}{img.filename});"
+        style="background-image: url({cfg.img_url}{img});"
       />
       <input
         type="text"
@@ -269,7 +282,7 @@
       <div class="btn-group">
         <button
           class="btn btn-outline-secondary"
-          on:click={moveDown(img.filename)}
+          on:click={moveDown(img)}
           title="Move down"
         >
           <i class="fas fa-caret-down" />
@@ -277,7 +290,7 @@
 
         <button
           class="btn btn-outline-secondary"
-          on:click={deleteImg(img.filename)}
+          on:click={deleteImg(img)}
           title="Delete"
         >
           <i class="fas fa-trash" />
@@ -288,7 +301,7 @@
 </ul>
 
 <style>
-  .btn-outline-secondary {
+  :global(.btn-outline-secondary) {
     border: 1px solid #ddd;
   }
 </style>
