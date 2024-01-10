@@ -40,7 +40,16 @@
 
           {#if item.json}
             {#each json(item.json) as [key, val]}
-              {key}
+              <div>{key}</div>
+            {/each}
+          {/if}
+
+          {#if item.images}
+            {#each item.images as img}
+              <img
+                src="https://cloud.appwrite.io/v1/storage/buckets/657257b8e3cc69765267/files/{img}/view?project=6555255e2967f4fed115"
+                class="img-fluid"
+              />
             {/each}
           {/if}
         </div>

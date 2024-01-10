@@ -3,6 +3,8 @@
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
+  import Gallery from "$lib/editor/widgets/Gallery.svelte";
+
   let curIndex = false;
 
   export let user;
@@ -71,6 +73,7 @@
       {
         title: posts[curIndex].title,
         body: posts[curIndex].body,
+        images: posts[curIndex].images,
       }
     );
 
@@ -122,6 +125,8 @@
 
       <textarea class="form-control mt-3" bind:value={posts[curIndex].body}
       ></textarea>
+
+      <Gallery bind:curItem={posts[curIndex]} key="images" />
 
       <button class="btn btn-dark mt-3" on:click={updatePost}>
         {#if loading}
