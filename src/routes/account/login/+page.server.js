@@ -1,12 +1,5 @@
 import sdk from "node-appwrite";
-
-const client = new sdk.Client();
-const users = new sdk.Users(client);
-
-client
-  .setEndpoint("https://cloud.appwrite.io/v1")
-  .setProject("6555255e2967f4fed115")
-  .setKey(import.meta.env.APW_KEY);
+import { client } from "$lib/appwrite/server.js";
 
 export const actions = {
   default: async ({ request }) => {

@@ -1,6 +1,6 @@
 import sdk from "node-appwrite";
 
-const client = new sdk.Client();
+export const client = new sdk.Client();
 const users = new sdk.Users(client);
 
 client
