@@ -1,9 +1,8 @@
 <script>
-  import { databases, ID } from "$lib/appwrite";
+  import { databases, ID } from "$lib/appwrite/client.js";
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
-  export let data;
   let curIndex = false;
 
   export let user;

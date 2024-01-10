@@ -1,9 +1,11 @@
 <script>
-  import User from "$lib/User.svelte";
+  import User from "$lib/appwrite/User.svelte";
 
   export let data;
   let posts = data.posts;
   let user = false;
+
+  console.log(data.posts);
 
   import { onMount } from "svelte";
 
@@ -16,6 +18,10 @@
     if (user) {
       Editor = (await import("$lib/editor/Editor.svelte")).default;
     }
+  }
+
+  function json(json) {
+    return Object.entries(JSON.parse(json));
   }
 </script>
 
@@ -31,6 +37,12 @@
         <div id={item.$id} data-edit data-fields="title=text&body=html">
           <h3>{item.title}</h3>
           <p>{item.body}</p>
+
+          {#if item.json}
+            {#each json(item.json) as [key, val]}
+              {key}
+            {/each}
+          {/if}
         </div>
       {/each}
     </div>

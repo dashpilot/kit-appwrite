@@ -1,5 +1,5 @@
 <script>
-  import { account } from "$lib/appwrite";
+  import { account } from "$lib/appwrite/client.js";
 
   let loading = false;
   let error = false;

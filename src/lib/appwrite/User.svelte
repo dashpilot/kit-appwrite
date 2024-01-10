@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { account, logout } from "$lib/appwrite";
+  import { account, logout } from "$lib/appwrite/client.js";
 
   onMount(async () => {
     checkLoggedIn();

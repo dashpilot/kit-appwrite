@@ -1,5 +1,5 @@
 <script>
-  import { account } from "$lib/appwrite";
+  import { account } from "$lib/appwrite/client.js";
 
   function signIn() {
     account.createOAuth2Session(
