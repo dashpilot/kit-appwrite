@@ -1,4 +1,4 @@
-import { databases, Query } from "$lib/appwrite/server.js";
+// import { databases, Query } from "$lib/appwrite/server.js";
 
 export async function load() {
   /*
